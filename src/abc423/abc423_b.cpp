@@ -10,12 +10,13 @@ int main() {
 
     int i = 0;
     while (L[i] == 0 && i < N) { i++; }
-    if (i == N) {
+    if (i >= N) {
         cout << 0 << endl;
+        return 0;
     }
 
     int j = N - 1;
-    while (L[j] == 0 && j > i) { j--; }
+    while (L[j] == 0 && j > 0) { j--; }
     cout << j - i << endl;
     return 0;
 }
