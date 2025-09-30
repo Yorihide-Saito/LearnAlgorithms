@@ -19,7 +19,6 @@ int main() {
         }
         if(count == 0) ans.push_back(i);
     }
-
     for (int i = ans.size() - 1; i >= 0; i--) {
         for (int j = n - 1; j >= 0; j--) {
             if ((ans[i] & (1 << j)) > 1) cout << "(";

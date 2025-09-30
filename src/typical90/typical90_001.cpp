@@ -10,24 +10,25 @@ int main() {
     ll n, l, k;
     cin >> n >> l;
     cin >> k;
-    vector<ll> a(n + 2, 0);
-    for (ll i = 1; i <= n; i++) cin >> a[i];
-    a[n + 1] = l;
 
-    ll left = -1, right = l + 1;
+    vector<ll> a(n + 2, 0);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    a[n+1] = l;
+
+    ll left = -1, right = INF;
     while (right - left > 1) {
-        ll mid = (right + left) / 2;
         ll prev = 0, count = 0;
-        for (ll i = 1; i <= n + 1; i++) {
-            if (a[i] - a[prev] >= mid) {
-                prev = i;
+        ll mid = (right + left) / 2;
+        for (int i = 1; i <= n + 1; i++) {
+            if (mid <= a[i] - a[prev]) {
                 count++;
+                prev = i;
             }
         }
-
-        if(count >= k + 1) left = mid;
+        if (count > k) left = mid;
         else right = mid;
     }
+
     cout << left << endl;
     return 0;
 }
