@@ -1,31 +1,57 @@
 #include<iostream>
 #include<vector>
-#include<cmath>
+#include<stack>
 #include<algorithm>
 using namespace std;
+#define Graph vector<vector<int>>
+
+vector<int> dfs(const Graph &g, int s) {
+    int n = g.size();
+    vector<int> dist(n, -1);
+    dist[s] = 0;
+
+    stack<int> st({s});
+    while(!st.empty()){
+        int visit = st.top();
+        st.pop();
+        for (int i = 0; i < (int)g[visit].size(); i++) {
+            int next = g[visit][i];
+            if (dist[next] == -1) {
+                st.push(next);
+                dist[next] = dist[visit] + 1;
+            }
+        }
+    }
+
+    return dist;
+}
 
 int main() {
     int n; cin >> n;
-    vector<int> ans;
 
-    int bit = pow(2, n);
-    for (int i = 1; i < bit; i++) {
-        if (__builtin_popcount(i) != n / 2) continue;
-        int count = 0;
-        for (int j = n - 1; j >= 0; j--) {
-            if ((i & 1 << j) >= 1) count++;
-            else count--;
-            if (count < 0) break;
-        }
-        if(count == 0) ans.push_back(i);
+    Graph g(n + 1);
+    for (int i = 0; i < n-1; i++) {
+        int a, b; cin >> a >> b;
+        g[a].push_back(b);
+        g[b].push_back(a);
     }
 
-    for (int i = ans.size() - 1; i >= 0; i--) {
-        for (int j = n - 1; j >= 0; j--) {
-            if ((ans[i] & (1 << j)) > 1) cout << "(";
-            else cout << ")";
+    vector<int> dist0 = dfs(g, 0);
+    int mx = -1, mv = -1;
+    for (int v = 0; v < n; v++) {
+        if (mx < dist0[v]) {
+            mx = dist0[v];
+            mv = v;
         }
-        cout << endl;
     }
+
+    vector<int> distmv = dfs(g, mv);
+    mx = -1;
+    for (int v = 0; v < n; v++) {
+        mx = max(mx, distmv[v]);
+    }
+
+    cout << mx + 1 << endl;
+
     return 0;
 }
