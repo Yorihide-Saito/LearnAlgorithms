@@ -5,22 +5,22 @@ using namespace std;
 int main() {
     int n, q; cin >> n >> q;
 
-    vector<long long> pc(n + 1, 0);
-    for (int i = 1; i <= n; i++) pc[i] = 1;
+    vector<int> mem(n + 1, 1);
+    int pre = 1;
 
-    while (q--) {
+    while(q--) {
         int x, y; cin >> x >> y;
-
-        long long moved = 0;
-        int upto = (x < n ? x : n);
-        for (int i = 1; i <= upto; i++) {
-            if (i == y) continue;
-            if (pc[i] == 0) continue;
-            moved += pc[i];
-            pc[y] += pc[i];
-            pc[i] = 0;
+        if (pre > x) {
+            cout << "0" << endl;
+            continue;
         }
-        cout << moved << '\n';
+
+        int count = 0;
+        for (int i = pre; i <= x; i++) count += mem[i];
+        mem[y] += count;
+        pre = x+1;
+
+        cout << count << endl;
     }
     return 0;
 }
