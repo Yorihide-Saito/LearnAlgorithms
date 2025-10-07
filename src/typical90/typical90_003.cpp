@@ -36,7 +36,7 @@ int main() {
         g[b].push_back(a);
     }
 
-    vector<int> dist0 = dfs(g, 0);
+    vector<int> dist0 = dfs(g, 1);
     int mx = -1, mv = -1;
     for (int v = 0; v < n; v++) {
         if (mx < dist0[v]) {
