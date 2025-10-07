@@ -1,34 +1,28 @@
 #include<iostream>
-#include<vector>
 #include<string>
+#include<algorithm>
 using namespace std;
 
 int main() {
-    int t; cin >> t;
-    while (t--) {
+    int T; cin >> T;
+    while (T--) {
         int n; cin >> n;
         string s; cin >> s;
 
-        char cc = s[n/2];
-        int sum_char_count = 0, all_count = 0;
-        for (int i = 0; i <= n / 2; i++) {
-            if(s[i] == cc) sum_char_count++;
-            else {
-                all_count += (sum_char_count * 2) + 1;
-                sum_char_count = 0;
-            }
+        int cnt[2] = {0, 0}, mx[2] = {0, 0};
+        for (int l = 0; l < n; ) {
+            int r = l + 1;
+            while(r < n && s[r] == s[l]) r++;
+            int c = s[l] - '0';
+            int len = r - l;
+            cnt[c] += len;
+            mx[c] = max(mx[c], len);
+            l = r;
         }
 
-        sum_char_count = 0;
-        for (int i = n-1; i > (n + 1) / 2; i--) {
-            if(s[i] == cc) sum_char_count++;
-            else {
-                all_count += (sum_char_count * 2) + 1;
-                sum_char_count = 0;
-            }
-        }
+        int ans = min((cnt[0] - mx[0]) * 2 + cnt[1], (cnt[1] - mx[1]) * 2 + cnt[0]);
 
-        cout << all_count << endl;
+        cout << ans << endl;
     }
     return 0;
 }
