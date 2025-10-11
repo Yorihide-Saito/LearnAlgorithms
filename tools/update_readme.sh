@@ -9,34 +9,15 @@ cd "$ROOT_DIR"
 mapfile -t ABC_DIRS < <(find src -maxdepth 1 -type d -name "abc*" 2>/dev/null | sort || true)
 
 TOTAL=0
-TABLE_HEADER=$'| Contest | Files |\n|:--|--:|'
-TABLE_ROWS=""
 
 for d in "${ABC_DIRS[@]:-}"; do
   name="$(basename "$d")"
   # -type f -name "*.cpp" を数える
   cnt="$(find "$d" -type f -name "*.cpp" 2>/dev/null | wc -l | tr -d ' ' || echo 0)"
   if [[ "${cnt:-0}" -gt 0 ]]; then
-    TABLE_ROWS+=$'\n'"| ${name} | ${cnt} |"
     TOTAL=$((TOTAL + cnt))
   fi
 done
-
-# 直近10件ぐらいの「最新コミット済みファイル例」（任意）
-# null区切りで安全に処理（スペース/日本語/改行を含むファイル名でもOK）
-LATEST_MD=""
-mapfile -t LATEST < <(
-  git -c core.quotepath=false ls-files -z 'src/abc*/**/*.cpp' 2>/dev/null \
-  | xargs -0 -r stat -c '%Y\t%n' 2>/dev/null \
-  | sort -nr | head -n 10 | cut -f2-
-)
-
-if ((${#LATEST[@]} > 0)); then
-  LATEST_MD=$'\n**最近の追加(最大10件):**\n\n'
-  for f in "${LATEST[@]}"; do
-    LATEST_MD+="- ${f}"$'\n'
-  done
-fi
 
 # JST（Actions の env: TZ=Asia/Tokyo を活用）
 DATE_JST="$(date +'%Y-%m-%d %H:%M:%S %Z')"
@@ -54,9 +35,7 @@ NEW_BLOCK="$(cat <<EOF
 - 合計: **${TOTAL}** ファイル
 - 最終更新: ${DATE_JST}
 
-${LATEST_MD}
 ${TABLE_HEADER}
-${TABLE_ROWS}
 
 > 対象は \`src/abc*/**/*.cpp\` のみ。Actions が push 時に自動更新します。
 <!-- ABC_COUNT_END -->
