@@ -9,7 +9,7 @@ cd "$ROOT_DIR"
 mapfile -t ABC_DIRS < <(find src -maxdepth 1 -type d -name "abc*" 2>/dev/null | sort || true)
 
 TOTAL=0
-TABLE_HEADER='| Contest | Files |\n|:--|--:|'
+TABLE_HEADER=$'| Contest | Files |\n|:--|--:|'
 TABLE_ROWS=""
 
 for d in "${ABC_DIRS[@]:-}"; do
@@ -51,7 +51,7 @@ NEW_BLOCK="$(cat <<EOF
 <!-- ABC_COUNT_START -->
 ### 🧮 ABC の C++ 実装数
 
-- 合計: **${TOTAL}** ファイル  
+- 合計: **${TOTAL}** ファイル
 - 最終更新: ${DATE_JST}
 
 ${LATEST_MD}

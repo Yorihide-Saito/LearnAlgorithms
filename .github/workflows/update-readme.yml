@@ -1,15 +1,17 @@
+# .github/workflows/update-readme.yml
 name: Update README (ABC cpp count)
 
 on:
-  push:
-    paths:
-      - "src/**"
-      - ".github/workflows/update-readme.yml"
-      - "tools/update_readme.sh"
-  workflow_dispatch: {}
+  workflow_dispatch: {}      # 手動でも
+  # push:
+  #   paths:
+  #     - "tools/update_readme.sh"     # 例：スクリプト更新時のみ自動起動したいなら限定
+  # schedule:
+  #   - cron: '0 9 * * *'             # 任意
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: update-readme
@@ -21,26 +23,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-            fetch-depth: 0
+          fetch-depth: 0
 
       - name: Make tools executable
-        run: |
-          chmod +x tools/update_readme.sh || true
+        run: chmod +x tools/update_readme.sh || true
 
       - name: Update README block
         env:
           TZ: Asia/Tokyo
-        run: |
-          bash tools/update_readme.sh
+        run: bash tools/update_readme.sh
 
-      - name: Commit & push if changed
-        run: |
-          if ! git diff --quiet README.md; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add README.md
-            git commit -m "chore(readme): auto-update ABC cpp count [skip ci]"
-            git push
-          else
-            echo "No README changes."
-          fi
+      - name: Create or update PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto/readme-abc-count
+          title: "chore(readme): auto-update ABC cpp count"
+          commit-message: "chore(readme): auto-update ABC cpp count [skip ci]"
+          body: |
+            自動生成: `tools/update_readme.sh`
+            - 実行日時 (JST): ${{ env.TZ || 'Asia/Tokyo' }}
+          labels: |
+            chore
+            automation
+          signoff: false
+          delete-branch: false
