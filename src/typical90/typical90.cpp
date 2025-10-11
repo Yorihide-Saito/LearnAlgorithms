@@ -1,19 +1,36 @@
 #include<iostream>
+#include<vector>
+#include<map>
+#include<algorithm>
 using namespace std;
 
-int main () {
-    int N, K;
-    string S;
-    if (!(cin >> N >> K >> S)) return 0;
+long long INF = 4e18;
 
-    string st; st.reserve(K);
-    for (int i = 0; i < N; ++i) {
-        while (!st.empty() && st.back() > S[i] && (int)st.size() - 1 + (N - i) >= K) {
-            st.pop_back();
-        }
-        if ((int)st.size() < K) st.push_back(S[i]);
+int main () {
+    int n; cin >> n;
+    vector<long long> a(n); for(int i = 0; i < n; i++) cin >> a[i];
+    a.push_back(INF);
+
+    int q; cin >> q;
+    map<long long, int> b;
+    for(int i = 0; i < q; i++) {
+        long long b_in;
+        cin >> b_in;
+        b[b_in] = i;
     }
-    st.resize(K);
-    cout << st << endl;
+
+    sort(a.begin(), a.end());
+
+    int point = 0;
+    map<long long, int> ans;
+    for (auto [key, value] : b) {
+        while(a.size() > point + 1 && key > a[point + 1]) point++;
+        ans[value] = min(abs(key - a[point]), abs(key - a[point + 1]));
+    }
+
+    for (int i = 0; i < ans.size(); i++) {
+        cout << ans[i] << endl;;
+    }
+
     return 0;
 }
