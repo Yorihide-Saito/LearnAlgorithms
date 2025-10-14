@@ -30,7 +30,7 @@ int main() {
     int n; cin >> n;
 
     Graph g(n + 1);
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         int a, b; cin >> a >> b;
         g[a].push_back(b);
         g[b].push_back(a);
@@ -38,7 +38,7 @@ int main() {
 
     vector<int> dist0 = dfs(g, 1);
     int mx = -1, mv = -1;
-    for (int v = 0; v < n; v++) {
+    for (int v = 1; v <= n; v++) {
         if (mx < dist0[v]) {
             mx = dist0[v];
             mv = v;
@@ -47,7 +47,7 @@ int main() {
 
     vector<int> distmv = dfs(g, mv);
     mx = -1;
-    for (int v = 0; v < n; v++) {
+    for (int v = 1; v <= n; v++) {
         mx = max(mx, distmv[v]);
     }
 
