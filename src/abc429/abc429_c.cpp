@@ -11,10 +11,11 @@ int main() {
         a[num] += 1;
     }
 
-    int ans = 0;
+    long long ans = 0;
     for (int i = 1; i <= n; i++) {
-        if (a[i] > 1) {
-            ans += a[i] * (a[i] - 1) / 2 * (n - a[i]);
+        long long a_i = a[i];
+        if (a_i > 1) {
+            ans += a_i * (a_i - 1) / 2 * (n - a_i);
         }
     }
     cout << ans << endl;
