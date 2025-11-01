@@ -24,8 +24,7 @@ int main () {
         while(r_a <= N && a_count[r_a] - a_count[l] < A) r_a++;
         while(r_b <= N && b_count[r_b] - b_count[l] < B) r_b++;
 
-        int L = max(l + 1, r_a);
-        if (L < r_b) ans += (r_b - L);
+        if (r_a < r_b) ans += (r_b - r_a);
     }
 
     cout << ans << endl;
