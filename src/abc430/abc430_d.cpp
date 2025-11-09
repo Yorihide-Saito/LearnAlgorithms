@@ -9,7 +9,7 @@ const long long INF = (long long)4e18;
 int main () {
     int N; cin >> N;
     auto f = [&](long long a, long long b) {
-        return (a >= INF && b >= INF) ? 0 : min(a, b);
+        return (a == INF && b == INF) ? 0 : min(a, b);
     };
 
     set<long long> s = {-INF, 0, INF};
