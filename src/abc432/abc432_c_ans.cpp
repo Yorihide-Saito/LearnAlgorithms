@@ -1,13 +1,9 @@
 #include<iostream>
-#include<string>
 #include<vector>
 #include<algorithm>
 #include<numeric>
-#include<utility>
 using namespace std;
 using ll = long long;
-
-const ll INF = (1LL<<60);
 
 int main() {
     ll N, X, Y; cin >> N >> X >> Y;
@@ -52,9 +48,10 @@ int main() {
         return 0;
     }
 
-    __int128 num = (__int128)N * w - (__int128)X * sumA;
-    ll ans = (ll)(num / d);
-
+    ll ans = 0;
+    for (int i = 0; i < N; i++) {
+        ans += (w - X * A[i]) / d;
+    }
     cout << ans << endl;
     return 0;
 }
