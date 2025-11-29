@@ -1,7 +1,5 @@
 # C++ Competitive Programming Cheatsheet (AtCoder向け)
 
-競技プログラミング（AtCoderなど）でよく使うC++の変数・書き方・データ構造をまとめました。コピーして使いやすいように **Markdown Doc形式** で整理しています。
-
 ---
 
 ## 0. お約束（高速入出力・別名・定数）
