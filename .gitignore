@@ -1,4 +1,22 @@
+# ビルド成果物
 *.in
 main
 a.out
 .vscode
+
+# Vault 内の md ノート
+10_atcoder_notes/
+20_algo_notes/
+30_diagrams/
+anki_csv/
+Templates/
+
+# Vault 内の md ノート（除外したい場合）
+10_atcoder_notes/
+20_algo_notes/
+30_diagrams/
+anki_csv/
+Templates/
+
+# OS ファイル
+.DS_Store
