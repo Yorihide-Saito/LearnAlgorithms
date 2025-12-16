@@ -7,7 +7,7 @@ using ll = long long;
 // abc023_d
 // https://atcoder.jp/contests/abc023/tasks/abc023_d
 
-static const ll INF = 1'000'000'000;
+static const ll INF = (1LL<<60);
 
 int main() {
     int N; cin >> N;
