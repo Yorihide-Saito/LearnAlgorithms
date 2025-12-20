@@ -5,19 +5,17 @@ a.out
 .vscode
 
 # Vault 内の md ノート
-00_index/
-10_atcoder_notes/
-20_algo_notes/
 30_anki/
 anki_csv/
 Templates/
 
 # Vault 内の md ノート（除外したい場合）
-10_atcoder_notes/
-20_algo_notes/
 30_anki/
 anki_csv/
 Templates/
+
+# Attachments フォルダ
+attachments/
 
 # OS ファイル
 .DS_Store
