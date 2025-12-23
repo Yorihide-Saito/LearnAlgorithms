@@ -1,9 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<map>
-#include<algorithm>
 using namespace std;
-using ll = long long;
 
 struct Node {
     map<int, int> to;
@@ -14,18 +12,17 @@ int main() {
     int N;
     cin >> N;
 
-    vector<int> pos(N + 1, 0);
     vector<Node> trie(1);
+    vector<int> pos(N + 1, 0);
 
     for (int i = 1; i <= N; i++) {
         int x, y;
         cin >> x >> y;
-        int p = pos[x];
 
-        // find() 存在しない場合は、to.end() を返す
+        int p = pos[x];
         auto it = trie[p].to.find(y);
         if (it == trie[p].to.end()) {
-            int v = (int) trie.size();
+            int v = trie.size();
             trie.push_back(Node{});
             trie[p].to[y] = v;
             pos[i] = v;
@@ -36,15 +33,14 @@ int main() {
     }
 
     vector<int> ans;
-    ans.reserve(N);
-    auto dfs = [&](auto&& self, int v) -> void {
-        for (int id : trie[v].ids) ans.push_back(id);
-        for (auto[y, nxt] : trie[v].to) self(self, nxt);
+    auto dfs = [&](auto&& self, int x) -> void {
+        for (int id : trie[x].ids) ans.push_back(id);
+        for (auto [label, nxt] : trie[x].to) self(self, nxt);
     };
     dfs(dfs, 0);
 
-    for (int i = 0; i< N; i++) {
-        cout << ans[i] << (i+1==N ? '\n' : ' ');
+    for (int i = 0; i < N; i++) {
+        cout << ans[i] << (i + 1 == N? '\n' : ' ');
     }
     return 0;
 }

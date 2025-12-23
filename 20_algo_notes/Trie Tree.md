@@ -93,31 +93,63 @@ struct Trie {
 };
 ```
 
-### 競プロ向けシンプル実装（mapベース）
+### 競プロ向けシンプル実装（ABC437E型）
 
 ```cpp
-// ノードごとにmapで子を管理
-vector<map<int, int>> trie(1);
-map<pair<int, int>, int> go;  // (親, ラベル) -> 子
+struct Node {
+    map<int, int> to;    // ラベル -> 次のノードID
+    vector<int> ids;     // このノードに到達した要素のID
+};
 
-int next_node(int p, int label) {
-    if (go.count({p, label})) {
-        return go[{p, label}];
+int main() {
+    int N;
+    cin >> N;
+
+    vector<Node> trie(1);
+    vector<int> pos(N + 1, 0);  // pos[i] = i番目の要素が到達するノード
+
+    for (int i = 1; i <= N; i++) {
+        int x, y;
+        cin >> x >> y;
+
+        int p = pos[x];  // 親ノード
+        auto it = trie[p].to.find(y);
+
+        if (it == trie[p].to.end()) {
+            // 新しいノードを作成
+            int v = trie.size();
+            trie.push_back(Node{});
+            trie[p].to[y] = v;
+            pos[i] = v;
+        } else {
+            // 既存のノードを使う
+            pos[i] = it->second;
+        }
+
+        trie[pos[i]].ids.push_back(i);
     }
 
-    int v = trie.size();
-    trie.push_back(map<int, int>());
-    go[{p, label}] = v;
-    trie[p][label] = v;
-    return v;
-}
+    // DFSで辞書順に出力
+    vector<int> ans;
+    auto dfs = [&](auto&& self, int x) -> void {
+        for (int id : trie[x].ids) ans.push_back(id);
+        for (auto [label, nxt] : trie[x].to) self(self, nxt);
+    };
+    dfs(dfs, 0);
 
-// 使い方
-int cur = 0;
-for (int c : str) {
-    cur = next_node(cur, c);
+    for (int i = 0; i < N; i++) {
+        cout << ans[i] << (i + 1 == N ? '\n' : ' ');
+    }
+
+    return 0;
 }
 ```
+
+**ポイント**:
+- `map<int, int> to` でラベルから次ノードへの遷移を管理
+- `vector<int> ids` で各ノードに到達した要素を記録
+- mapは自動的にソートされるため、辞書順の探索が簡単
+- 再帰ラムダ `auto&& self` でDFSを実装
 
 ## 使用例
 
