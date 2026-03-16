@@ -25,7 +25,7 @@ int main() {
         else if (mr - ml <= R && mr < S.size()) {
             mr++;
         }
-        else if (mr = S.size() && mr - ml >= L) {
+        else if (mr = S.size() && mr - ml < L) {
             ml++;
         }
         if (mr > S.size() && mr - ml > L) break;
