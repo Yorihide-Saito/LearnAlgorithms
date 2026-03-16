@@ -7,49 +7,17 @@ using namespace std;
 using ll = long long;
 
 int main() {
-    int N;
-    cin >> N;
+    int K, M;
+    cin >> K >> M;
 
-    vector<int> A(N);
-    for (int i = 0; i < N; i++) cin >> A[i];
-
-    vector<vector<int>> graph(N);
-    for (int i = 0; i < N - 1; i++) {
-        int U, V;
-        cin >> U >> V;
-        U--; V--;
-        graph[U].push_back(V);
-        graph[V].push_back(U);
+    vector<int> c(K), l(K);
+    for (int i = 0; i < K; i++) {
+        cin >> c[i] >> l[i];
     }
 
-    unordered_map<int, int> cnt;
-    vector<string> ans(N);
-    int dup = 0;
-
-    auto dfs = [&](auto&& self, int v, int p) -> void {
-        // 各ノードに訪ねた瞬間に重複を確認して、重複がある場合は No を格納する
-        // 重複を計算するカウント状態を持つ
-        // dup は duplicate の略で重複の数をカウントする
-        cnt[A[v]]++;
-        if (cnt[A[v]] >= 2) dup++;
-
-        ans[v] = (dup > 0 ? "Yes" : "No");
-
-        // DFS 自体の処理
-        for (int to : graph[v]) {
-            if (to == p) continue;
-            self(self, to, v);
-        }
-
-        // DFS の終わり戻りの際に今いる地点の重複を削除して戻す
-        if (cnt[A[v]] >= 2) dup--;
-        cnt[A[v]]--;
-    };
-
-    dfs(dfs, 0, -1);
-
-    for (int i = 0; i < N; i++) {
-        cout << ans[i] << "\n";
+    for (int i = K - 1, i > 0; i--){
+        c[i]
     }
+
     return 0;
 }
