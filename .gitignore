@@ -18,7 +18,7 @@ Templates/
 attachments/
 
 # OS ファイル
-.DS_Store
+*/.DS_Store
 00_index/
 10_atcoder_notes/
 20_algo_notes/
