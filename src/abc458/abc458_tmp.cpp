@@ -26,10 +26,10 @@ long long C(long long n, long long r) {
 }
 
 int main() {
-    long long X_1, X_2, X_3;
-    cin >> X_1 >> X_2 >> X_3;
+    long long X1, X2, X3;
+    cin >> X1 >> X2 >> X3;
 
-    long long N = X_1 + X_2 + X_3 + 5;
+    long long N = X1 + X2 + X3 + 2;
     fact[0] = 1;
     for (int i = 1; i <= N; i++) {
         fact[i] = fact[i - 1] * i % MOD;
@@ -40,16 +40,14 @@ int main() {
     }
 
     long long ans = 0;
+    for (int i = 0; i <= X1 && i <= X2 + 1; i++) {
+        long long a = C(X2 + 2, i);
+        long long b = C(X1 - 1, i - 1);
+        long long c = C(X2 + X3 - i, X2 - i);
 
-    for (int i = 0; i <= X_1 && i <= X_2 + 1; i++) {
-        long long waysChooseSlots = C(X_2 + 1, i);
-        long long waysSplitOnes = C(X_1 - 1, i - 1);
-        long long waysPlaceThrees = C(X_2 + X_3 - i, X_3);
-
-        ans += waysChooseSlots * waysSplitOnes % MOD * waysPlaceThrees % MOD;
+        ans += a * b % MOD * c % MOD;
         ans %= MOD;
     }
-
     cout << ans << endl;
 
     return 0;
