@@ -14,6 +14,26 @@ using ll = long long;
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    long long a, b, x;
+    cin >> a >> b >> x;
 
+    long long ok = 0, ng = 1e9 + 1;
+    auto d = [&] (long long x) {
+        long long ans = 0;
+        while(x > 0) {
+            x = x / 10;
+            ans++;
+        }
+        return ans;
+    };
+    auto check = [&] (long long mid) {
+        return x >= (a * mid) + (b * d(mid));
+    };
+    while(ng - ok > 1) {
+        long long mid = (ok + ng) / 2;
+        (check(mid) ? ok : ng) = mid;
+    }
+
+    cout << ok << endl;
     return 0;
 }
