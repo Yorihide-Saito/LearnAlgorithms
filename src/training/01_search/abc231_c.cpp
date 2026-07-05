@@ -15,5 +15,17 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int n, q;
+    cin >> n >> q;
+    vector<int> a(n, 0);
+    for (auto &x : a) cin >> x;
+
+    sort(a.begin(), a.end());
+    while(q--) {
+        int x;
+        cin >> x;
+        int it = lower_bound(a.begin(), a.end(), x) - a.begin();
+        cout << n - (it) << endl;
+    }
     return 0;
 }
