@@ -15,5 +15,40 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> s(m, vector<int>(n, 0));
+    vector<int> k(m);
+    for (int i = 0; i < m; i++) {
+        cin >> k[i];
+        for (int j = 0; j < k[i]; j++) {
+            int tmp = 0;
+            cin >> tmp;
+            s[i][--tmp] = 1;
+        }
+    }
+    vector<int> p(m);
+    for (int i = 0; i < m; i++) {
+        cin >> p[i];
+    }
+
+    int ans = 0;
+    for (int bit = 0; bit < (1 << n); bit++) {
+        int isOk = true;
+        for (int i = 0; i < m; i++) {
+            int cnt = 0;
+            for (int j = 0; j < n; j++) {
+                if ((bit >> j & 1) && s[i][j]) {
+                    cnt++;
+                }
+            }
+            if (cnt % 2 != p[i]) {
+                isOk = false;
+                break;
+            }
+        }
+        if(isOk) ans++;
+    }
+    cout << ans << endl;
     return 0;
 }
