@@ -15,5 +15,24 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int n, q;
+    cin >> n >> q;
+    string s;
+    cin >> s;
+
+    vector<int> sum(n + 1, 0);
+    for (int i = 0; i < n - 1; i++) {
+        sum[i + 1] = sum[i];
+        if(s[i] == 'A' && s[i+1] == 'C') {
+            sum[i + 1]++;
+        }
+    }
+    sum[n] = sum[n - 1];
+
+    while(q--) {
+        int l, r;
+        cin >> l >> r;
+        cout << sum[r - 1] - sum[l - 1] << endl;
+    }
     return 0;
 }
