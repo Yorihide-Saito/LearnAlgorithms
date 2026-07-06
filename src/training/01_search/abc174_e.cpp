@@ -15,5 +15,26 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int n;
+    long long k;
+    cin >> n >> k;
+    vector<long long> a(n);
+    for (auto &x : a) cin >> x;
+
+    long long ng = 0, ok = 1e9;
+    auto check = [&] (long long mid) {
+        long long need = 0;
+        for (int i = 0; i < n; i++) {
+            need += (a[i] - 1) / mid;
+        }
+        return need <= k;
+    };
+    while(ok - ng > 1) {
+        long long mid = (ok + ng) / 2;
+        (check(mid)? ok : ng) = mid;
+    }
+
+    cout << ok << endl;
+
     return 0;
 }
