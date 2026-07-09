@@ -15,5 +15,27 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int n;
+    cin >> n;
+    vector<int> dp(3, 0), ndp(3, 0);
+
+    int a, b, c;
+    cin >> a >> b >> c;
+    dp[0] = a;
+    dp[1] = b;
+    dp[2] = c;
+    for (int i = 1; i < n; i++) {
+        cin >> a >> b >> c;
+        ndp[0] = a + max(dp[1], dp[2]);
+        ndp[1] = b + max(dp[0], dp[2]);
+        ndp[2] = c + max(dp[0], dp[1]);
+        dp = ndp;
+    }
+
+    int ans = 0;
+    for (int i = 0; i < 3; i++) {
+        ans = max(ans, dp[i]);
+    }
+    cout << ans << endl;
     return 0;
 }
