@@ -23,10 +23,40 @@ void dbg_out(const T& a, const U&... b) { cerr << a << ", "; dbg_out(b...); }
 
 const long long INF = (1LL << 60);
 
+/**
+ * 振り返り ABC 467 C
+ * - https://atcoder.jp/contests/abc467/tasks/abc467_c
+ */
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int N, M;
+    cin >> N >> M;
+    vector<long long> A(N), B(N-1);
+    for (auto &x : A) cin >> x;
+    for (auto &x : B) cin >> x;
+
+    vector<long long> dp(M, INF);
+    for (int i = 0; i < M; i++) {
+        dp[i] = (i - A[0] + M) % M;
+    }
+
+    for (int i = 1; i < N; i++) {
+        vector<long long> ndp(M, INF);
+
+        for (int j = 0; j < M; j++) {
+            int prev = (B[i - 1] - j + M) % M;
+            long long cost = (j - A[i] + M) % M;
+
+            ndp[j] = dp[prev] + cost;
+        }
+        dp = move(ndp);
+        dbg(dp);
+    }
+
+    cout << *min_element(dp.begin(), dp.end()) << endl;
 
     return 0;
 }

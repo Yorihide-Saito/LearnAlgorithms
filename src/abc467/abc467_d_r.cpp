@@ -21,7 +21,10 @@ void dbg_out(const T& a, const U&... b) { cerr << a << ", "; dbg_out(b...); }
 #define dbg(...)
 #endif
 
-const long long INF = (1LL << 60);
+/**
+ * 振り返り ABC 467 D
+ * - https://atcoder.jp/contests/abc467/tasks/abc467_d
+ */
 
 int main() {
     ios::sync_with_stdio(false);
