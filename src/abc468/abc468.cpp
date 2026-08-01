@@ -25,47 +25,14 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string S;
-    cin >> S;
-
-    int siz = S.size();
-    long long ans = 0;
-    for (int i = 0; i < siz; i++) {
-        int left = i, right = i;
-        int count = 0;
-        while(left >= 0 && right < siz) {
-
-            if(S[left] != S[right]) count++;
-            if (count <= 1) {
-                ans++;
-                dbg(left, right);
-            }
-            else {
-                break;
-            }
-
-            left--;
-            right++;
-        }
+    int N;
+    cin >> N;
+    vector<long long> A(N, 0);
+    for (auto &x : A) cin >> A;
+    vector<long long> pref(N + 1, 0);
+    for (int i = 1; i <= N; i++){
+        pref[i] = pref[i - 1] + A[i];
     }
 
-    for (int i = 0; i + 1 < siz; i++) {
-        int left = i, right = i + 1;
-        int count = 0;
-        while(left >= 0 && right < siz) {
-
-            if (S[left] != S[right]) count++;
-            if (count <= 1) {
-                ans++;
-            }
-            else {
-                break;
-            }
-            left--;
-            right++;
-        }
-    }
-
-    cout << ans << endl;
     return 0;
 }
