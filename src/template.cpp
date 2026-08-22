@@ -25,9 +25,6 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    // ① データ構造:
-    // ② ループ/遷移:
-    // ③ 答え:
 
     return 0;
 }
